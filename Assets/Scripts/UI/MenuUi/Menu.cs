@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
-{   
+{
+    public LocalizationAsset leng;
+
     public Button continues;
     public Button load;
     public Button exit;
@@ -13,17 +15,20 @@ public class Menu : MonoBehaviour
 
     public GameObject underMenu;
 
-
+    public GameObject setting;
 
     public bool menuEnter = false;
     //public static bool GameOnPause = false;
     // Start is called before the first frame update
     void Start()
-    {   
-        cans = GameObject.Find("MenuCanv");
-        cans.SetActive(false);
-        underMenu = GameObject.Find("Under");
-        underMenu.SetActive(false);
+    {
+        leng = GetComponent<LocalizationAsset>();
+
+        cans = GameObject.Find("MenuCanv");  cans.SetActive(false);
+
+        underMenu = GameObject.Find("Under"); underMenu.SetActive(false);
+       
+        setting = GameObject.Find("Setting"); setting.SetActive(false);
         //sceneLoad = GameObject.Find("LoadMenu");
         //sceneLoad.SetActive(false);
     }
@@ -32,7 +37,6 @@ public class Menu : MonoBehaviour
     void Update()
     {
         ShowMenu();
-
     }
 
 
@@ -41,7 +45,8 @@ public class Menu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))                                                              
         {
             if (menuEnter != true)
-            {
+            {   
+
                 cans.SetActive(true);
                 menuEnter = true;
                 Time.timeScale = 0f;
@@ -59,6 +64,8 @@ public class Menu : MonoBehaviour
     public void Contin()
     {
         cans.SetActive(false);
+        underMenu.SetActive(false);
+        setting.SetActive(false);
         menuEnter = false;
         Time.timeScale = 1f;
     }
@@ -67,13 +74,20 @@ public class Menu : MonoBehaviour
         //Debug.Log("Работает");
         //sceneLoad.SetActive(true);
         //SceneManager.LoadScene(2);
+
         underMenu.SetActive(true);
+    }
+
+    public void SetSetting()
+    {
+        setting.SetActive(true);   
     }
 
     public void ExitGame()
     {
         Application.Quit();
     }
+
 
 }
 

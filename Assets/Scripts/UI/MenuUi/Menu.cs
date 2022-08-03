@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
@@ -11,11 +12,13 @@ public class Menu : MonoBehaviour
     public Button load;
     public Button exit;
 
-    public GameObject cans;
+    public GameObject Cans;
 
     public GameObject underMenu;
 
     public GameObject setting;
+
+    public GameObject Exit;
 
     public bool menuEnter = false;
     //public static bool GameOnPause = false;
@@ -24,11 +27,14 @@ public class Menu : MonoBehaviour
     {
         leng = GetComponent<LocalizationAsset>();
 
-        cans = GameObject.Find("MenuCanv");  cans.SetActive(false);
+        Cans = GameObject.Find("MenuCanv"); Cans.SetActive(false);
 
         underMenu = GameObject.Find("Under"); underMenu.SetActive(false);
-       
+
         setting = GameObject.Find("Setting"); setting.SetActive(false);
+
+        Exit = GameObject.Find("ExitChoise"); Exit.SetActive(false);
+
         //sceneLoad = GameObject.Find("LoadMenu");
         //sceneLoad.SetActive(false);
     }
@@ -40,14 +46,14 @@ public class Menu : MonoBehaviour
     }
 
 
-   public void ShowMenu()
+    public void ShowMenu()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))                                                              
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (menuEnter != true)
-            {   
+            {
 
-                cans.SetActive(true);
+                Cans.SetActive(true);
                 menuEnter = true;
                 Time.timeScale = 0f;
             }
@@ -63,32 +69,42 @@ public class Menu : MonoBehaviour
 
     public void Contin()
     {
-        cans.SetActive(false);
+        Cans.SetActive(false);
         underMenu.SetActive(false);
         setting.SetActive(false);
+        Exit.SetActive(false);
         menuEnter = false;
         Time.timeScale = 1f;
     }
     public void LoadConv()
     {
-        //Debug.Log("Работает");
-        //sceneLoad.SetActive(true);
-        //SceneManager.LoadScene(2);
+        if (underMenu.activeInHierarchy == true)
+            underMenu.SetActive(false);
+        else
+            underMenu.SetActive(true);
 
-        underMenu.SetActive(true);
     }
 
     public void SetSetting()
     {
-        setting.SetActive(true);   
+        if (setting.activeInHierarchy == true)
+            setting.SetActive(false);
+        else
+            setting.SetActive(true);
     }
 
     public void ExitGame()
     {
-        Application.Quit();
+        Exit.SetActive(true);
     }
 
+    public void MenExit()
+    { SceneManager.LoadScene(0); }
 
+    public void GamExit()
+    {
+        Application.Quit();
+    } 
 }
 
 
